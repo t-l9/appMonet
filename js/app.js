@@ -1,4 +1,3 @@
-
 (function($) {
     let qs = getQueryParams(location);
     let prices = [];
@@ -21,7 +20,7 @@
                 let json = JSON.stringify(data['query']['results']['json']['response'][0]['price']);
                 prices.push(json);
                 getHighestPrice(prices);
-                console.log(highest);
+                console.log(`Current Highest Bid: ${highest}`);
             },
             error: function(e, textstatus, message) {
                 if(textstatus==="timeout") {

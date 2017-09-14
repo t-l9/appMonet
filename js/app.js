@@ -3,37 +3,39 @@
     let qs = getQueryParams(location);
     let prices = [];
     let highest = 0;
-    let timeout = false;
 
     const yql_url = 'https://query.yahooapis.com/v1/public/yql';
     const url = 'http://us-east.dc-1.net/rtb/v1';
 
-    function requestRoute(qs) {
-        for(let i = 0; i < qs.requests; i++) {
-             var res = $.ajax({
-                'url': yql_url,
-                'data': {
-                    'q': 'SELECT * FROM json WHERE url="'+url+'"',
-                    'format': 'json',
-                    'jsonCompat': 'new',
-                },
-                'dataType': 'json',
-                'success': function (data) {
-                    let json = JSON.stringify(data['query']['results']['json']['response'][0]['price']);
-                    prices.push(json);
-                    console.log(prices)
-                    getHighestPrice(prices);
-                    console.log(highest)
+    function xhr(qs){
+        return $.ajax({
+            url: yql_url,
+            data: {
+                'q': 'SELECT * FROM json WHERE url="'+url+'"',
+                'format': 'json',
+                'jsonCompat': 'new',
+            },
+            dataType: 'json',
+            timeout: qs.timeout,
+            success: function (data) {
+                let json = JSON.stringify(data['query']['results']['json']['response'][0]['price']);
+                prices.push(json);
+                getHighestPrice(prices);
+                console.log(highest);
+            },
+            error: function(e, textstatus, message) {
+                if(textstatus==="timeout") {
+                    console.error(textstatus);
+                } else {
+                    console.error(textstatus);
                 }
-                // 'timeout': 2000
-            });
-        }
+            }
+        });
     }
 
     function makeRequest(qs) {
-    	setTimeout(function(){timeout=true}, qs.timeout);
-        if(!timeout) {
-            requestRoute(qs)
+        for(let i = 0; i < qs.requests; i++) {
+            xhr(qs);
         }
     }
 

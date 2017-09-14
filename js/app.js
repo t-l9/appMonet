@@ -17,7 +17,7 @@
                     'format': 'json',
                     'jsonCompat': 'new',
                 },
-                'dataType': 'jsonp',
+                'dataType': 'json',
                 'success': function (data) {
                     let json = JSON.stringify(data['query']['results']['json']['response'][0]['price']);
                     prices.push(json);

@@ -1,32 +1,12 @@
+
 (function($) {
-
     let qs = getQueryParams(location);
-    let yql_url = 'https://query.yahooapis.com/v1/public/yql';
-    let url = 'http://us-east.dc-1.net/rtb/v1';
     let prices = [];
-    console.log(qs)
+    let highest = 0;
+    let timeout = false;
 
-    function makeRequest(qs) {
-        	// setTimeout(requestRoute(qs), qs.timeout);
-
-            requestRoute(qs)
-            console.log(getHighestPrice(prices))
-
-            console.log(prices)
-        	// console.log(Math.max(...[0.93395864925461, 0.93395864925461, 0.97616991194802]));
-
-    }
-
-    function getHighestPrice(arr) {
-        let highest = 0;
-        for(let i = 0; i <= arr.length; i++) {
-            if (arr[i] > highest) {
-                highest = arr[i]
-            }
-        }
-
-        return highest;
-    }
+    const yql_url = 'https://query.yahooapis.com/v1/public/yql';
+    const url = 'http://us-east.dc-1.net/rtb/v1';
 
     function requestRoute(qs) {
         for(let i = 0; i < qs.requests; i++) {
@@ -39,15 +19,36 @@
                 },
                 'dataType': 'jsonp',
                 'success': function (data) {
-                    // var json = JSON.stringify(data['query']['results']['json'])
-                    var json = JSON.stringify(data['query']['results']['json']['response'][0]['price']);
-                    prices.push(json); //get highest PRICE HERE!!!!!
+                    let json = JSON.stringify(data['query']['results']['json']['response'][0]['price']);
+                    prices.push(json);
+                    console.log(prices)
+                    getHighestPrice(prices);
+                    console.log(highest)
                 }
+                // 'timeout': 2000
             });
         }
     }
 
+    function makeRequest(qs) {
+    	setTimeout(function(){timeout=true}, qs.timeout);
+        if(!timeout) {
+            requestRoute(qs)
+        }
+    }
+
+    function getHighestPrice(arr) {
+        for(let i = 0; i <= arr.length; i++) {
+            if (arr[i] > highest) {
+                highest = arr[i]
+            }
+        }
+
+        return highest;
+    }
+
     function getQueryParams(url) {
+
         let qs = new Map(url.href.split('?')[1].split('&').map(q=>q.split("=")));
         let qsObject = strMapToObj(qs);
         const valid = validateQueryParams(qsObject);

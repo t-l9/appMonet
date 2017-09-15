@@ -1,4 +1,6 @@
 (function($) {
+
+
     let qs = getQueryParams(location);
     let prices = [];
     let highest = 0;
@@ -51,11 +53,11 @@
 
         p.then(() => {
             console.log(`%c Final Highest Bid: ${highest} `, 'background: black; color: white');
-        }).catch(reason => {
-            if(error==="timeout") {
+        }).catch(err => {
+            if(error === "timeout") {
                 console.error('The bidding request timed out.');
             } else {
-                console.error(`textstatus ${textstatus}`);
+                console.error(`Error: ${err}`);
             }
         });
     }

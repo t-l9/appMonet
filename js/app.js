@@ -4,7 +4,7 @@
     let qs = getQueryParams(location);
     let prices = [];
     let highest = 0;
-    var error = null;
+    let error = null;
     const yql_url = 'https://query.yahooapis.com/v1/public/yql';
     const url = 'http://us-east.dc-1.net/rtb/v1';
 

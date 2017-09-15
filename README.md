@@ -8,4 +8,5 @@
  * To serve the app run `http-server ./appMonet -p 8080 -o`
  * Update the url to look like this: `http://127.0.0.1:8080/index.html?requests=15&timeout=75`
  * Update the values of `request` and `timeout` if desired. The current url is a good balance of full responses and timeouts. Because I'm using a proxy, don't make requests a very large number because yahoo will lock you out for a couple minutes. (See the JS Doc above the `xhr()` function in `app.js` for further explaination)
+ * The output is in the browser's console. For simplicity, I'm not transpiling, so I suggest using Chrome.
  * Have fun and let me know if you have any questions!

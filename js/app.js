@@ -40,6 +40,17 @@
 
 
     /**
+     * Logs the output for all bids and the highest.
+     * @returns {undefined}
+     */
+    function log() {
+        console.log('All Bids:');
+        console.log(prices);
+        console.log(`%c Final Highest Bid: ${highest} `, 'background: black; color: white');
+    }
+
+
+    /**
      * Starts the calls to the endpoint by calling xhr()
      * and logging out the current highest bid, largest bid,
      * and possible errors.
@@ -52,10 +63,9 @@
         }
 
         p.then(() => {
-            console.log('All Bids:');
-            console.log(prices);
-            console.log(`%c Final Highest Bid: ${highest} `, 'background: black; color: white');
+            log();
         }).catch(err => {
+            log();
             if(error === "timeout") {
                 console.error('The bidding request timed out.');
             } else {

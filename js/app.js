@@ -52,6 +52,8 @@
         }
 
         p.then(() => {
+            console.log('All Bids:');
+            console.log(prices);
             console.log(`%c Final Highest Bid: ${highest} `, 'background: black; color: white');
         }).catch(err => {
             if(error === "timeout") {

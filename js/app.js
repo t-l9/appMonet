@@ -57,7 +57,7 @@
      * @returns {undefined}
      */
     function makeRequest() {
-        let p = $.when([]);
+        let p = $.when();
         for(let i = 0; i < qs.requests; i++) {
             p = p.then(() => xhr());
         }
